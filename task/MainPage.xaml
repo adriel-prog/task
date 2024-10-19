@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="task.MainPage"
+             Title="Monitoramento de Hábitos"
+             BackgroundColor="White">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30,20" Spacing="25">
+
+            <Label Text="Monitoramento de Hábitos" FontSize="32" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#333" />
+
+            <Entry Placeholder="Nome do Hábito" Text="{Binding NewHabitTitle}" Margin="0,0,0,10" 
+                   BackgroundColor="DarkGray" PlaceholderColor="White" />
+            <Entry Placeholder="Frequência Diária" Text="{Binding NewHabitFrequency}" Keyboard="Numeric" Margin="0,0,0,10" 
+                   BackgroundColor="DarkGray" PlaceholderColor="White" />
+            <Button Text="➕ Adicionar Hábito" 
+                    Command="{Binding AddHabitCommand}" 
+                    HorizontalOptions="Fill" 
+                    BackgroundColor="#4CAF50" 
+                    TextColor="White" 
+                    CornerRadius="25" 
+                    HeightRequest="50" 
+                    MinimumWidthRequest="150" 
+                    MinimumHeightRequest="50" 
+                    FontSize="18" />
+
+            <Label Text="Hábitos Ativos" FontSize="24" HorizontalOptions="Center" TextColor="#555" Margin="0,20,0,0" />
+            <CollectionView ItemsSource="{Binding ActiveHabits}" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="#E0E0E0" CornerRadius="10" Padding="10" Margin="0,5" BackgroundColor="White" HasShadow="True">
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="10">
+                                <Label Text="{Binding Title}" VerticalOptions="Center" FontAttributes="Bold" FontSize="18" TextColor="#333" />
+                                <Label Text="{Binding Frequency}" VerticalOptions="Center" Margin="10,0" TextColor="#888" />
+                                
+                                <Grid ColumnDefinitions="*,*" HorizontalOptions="EndAndExpand">
+                                    <Button Text="✅" 
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.CompleteHabitCommand}" 
+                                            CommandParameter="{Binding .}" 
+                                            BackgroundColor="#2196F3" 
+                                            TextColor="White" 
+                                            CornerRadius="25" 
+                                            MinimumWidthRequest="50" 
+                                            MinimumHeightRequest="40" />
+                                    <Button Text="❌" 
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RemoveHabitCommand}" 
+                                            CommandParameter="{Binding .}" 
+                                            BackgroundColor="#F44336" 
+                                            TextColor="White" 
+                                            CornerRadius="25" 
+                                            MinimumWidthRequest="50" 
+                                            MinimumHeightRequest="40" 
+                                            Grid.Column="1" />
+                                </Grid>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label Text="Hábitos Concluídos" FontSize="24" HorizontalOptions="Center" TextColor="#555" Margin="0,20,0,0" />
+            <CollectionView ItemsSource="{Binding CompletedHabits}" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="#E0E0E0" CornerRadius="10" Padding="10" Margin="0,5" BackgroundColor="White" HasShadow="True">
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="10">
+                                <Label Text="{Binding Title}" VerticalOptions="Center" FontAttributes="Bold" FontSize="18" TextColor="#333" />
+                                <Label Text="{Binding Frequency}" VerticalOptions="Center" Margin="10,0" TextColor="#888" />
+                                <Label Text="Total:" VerticalOptions="Center" TextColor="#555" />
+                                <Label Text="{Binding Count}" VerticalOptions="Center" Margin="0,0,10,0" TextColor="#333" />
+                                
+                                <Grid ColumnDefinitions="*" HorizontalOptions="EndAndExpand">
+                                    <Button Text="❌" 
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RemoveHabitCommand}" 
+                                            CommandParameter="{Binding .}" 
+                                            BackgroundColor="#F44336" 
+                                            TextColor="White" 
+                                            CornerRadius="25" 
+                                            MinimumWidthRequest="50" 
+                                            MinimumHeightRequest="40" />
+                                </Grid>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
